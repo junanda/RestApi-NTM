@@ -5,6 +5,9 @@ import cors from 'cors'
 import compression from 'compression'
 import helmet from 'helmet'
 
+// Routes
+import UserRoutes from './routers/UserRoutes';
+
 class App {
     public app:Application;
 
@@ -23,9 +26,11 @@ class App {
     }
 
     protected routes():void{
-        this.app.route("/").get((req:Request, res:Response) => {
+        this.app.route("/api/v1/").get((req:Request, res:Response) => {
             res.send("Welcome to RestAPI Pattern Architect")
         })
+
+        this.app.use("/api/v1/users", UserRoutes)
     }
 }
 
