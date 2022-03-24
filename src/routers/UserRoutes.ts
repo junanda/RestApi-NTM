@@ -1,17 +1,13 @@
 import BaseRouter from "./BaseRoutes";
 import { Request, Response } from 'express'
 
+// Controller
+import UserController from "../controllers/UserController";
+
 class UserRoutes extends BaseRouter {
 
     public routes(): void {
-        this.router.get("/", (req:Request, res:Response) => {
-            const data:{} = {
-                "success": true,
-                "message": "Get All user data",
-                "data": ""
-            }
-            res.send(data)
-        })
+        this.router.get("/", UserController.index)
     }
     
 }
