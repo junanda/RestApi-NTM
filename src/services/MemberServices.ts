@@ -1,5 +1,6 @@
 import { Request } from 'express'
 import DataStore from '../datastore/DSInterface';
+import Authentication from '../utils/Authentication';
 
 const db = require('../db/models')
 
@@ -22,9 +23,13 @@ class MemberService implements DataStore{
 
     store = async () => {
         const {name, username, password, role} = this.body
+        const passHash = await Authentication.passHash(password)
 
         const stored = await db.member.create({
-            name, username, password, role
+            name: name, 
+            username: username, 
+            password: passHash, 
+            role: role
         })
 
         return stored
@@ -73,6 +78,14 @@ class MemberService implements DataStore{
         })
 
         return data
+    }
+
+    checkUsername = async (username:string) => {
+        const user = await db.member.findOne({
+            where: {username}
+        })
+
+        return user
     }
 
 }

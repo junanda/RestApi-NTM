@@ -8,6 +8,7 @@ import helmet from 'helmet'
 // Routes
 import UserRoutes from './routers/UserRoutes';
 import TodoRoutes from './routers/TodoRoutes';
+import AuthRoutes from './routers/AuthRoutes';
 
 class App {
     public app:Application;
@@ -33,6 +34,7 @@ class App {
 
         this.app.use("/api/v1/users", UserRoutes)
         this.app.use("/api/v1/todos", TodoRoutes)
+        this.app.use("/api/v1/login", AuthRoutes)
     }
 }
 
