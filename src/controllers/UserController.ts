@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import IController from './ControllerInterface'
 import MemberService from '../services/MemberServices'
+import { responseSerialize, failNotFound } from '../utils/helper'
 
 class UserController implements IController {
     index = async (req: Request, res: Response): Promise<Response> => {
@@ -8,12 +9,9 @@ class UserController implements IController {
         
         const members = await service.getAll()
 
-        const data:{} = {
-            "success": true,
-            "message": "Get All user data",
-            "data": members
-        }
-        return res.send(data)
+        const data = responseSerialize(members, res.statusCode, true)
+
+        return res.json(data)
     }
 
     create = async (req: Request, res: Response):Promise<Response> =>  {
@@ -21,13 +19,9 @@ class UserController implements IController {
 
         const new_data = await service.store()
 
-        const data = {
-            success: true,
-            message: "create new user success",
-            data: new_data
-        }
+        const status = responseSerialize(new_data, res.statusCode, true)
 
-        return res.json(data)
+        return res.json(status)
     }
 
     detail = async (req: Request, res: Response): Promise<Response> => {
@@ -35,11 +29,9 @@ class UserController implements IController {
 
         const data = await service.getOne()
 
-        return res.json({
-            success: true,
-            message: "get detail data success",
-            data: data
-        })
+        const result = responseSerialize(data, res.statusCode, true)
+
+        return res.json(result)
     }
 
     update = async (req: Request, res: Response): Promise<Response> => {
@@ -48,18 +40,13 @@ class UserController implements IController {
         const up = await service.update()
 
         if(up[0]){
-            return res.json({
-                success: true,
-                message: "Update data success",
-                data: up
-            })
+            const success = responseSerialize(up, res.statusCode, true)
+            return res.json(success)
         }
 
-        return res.status(404).json({
-            success: false,
-            message: `data id ${req.params.id} not found`,
-            data: ""
-        })
+        const fail = failNotFound("Resource Not Found", 404)
+
+        return res.json(fail)
         // throw new Error('Method not implemented.')
     }
 
@@ -69,18 +56,12 @@ class UserController implements IController {
         const del_data = await service.delete()
         // throw new Error('Method not implemented.')
         if(del_data){
-            return res.json({
-                success: true,
-                message: "Delete data success",
-                data: ""
-            })
+            const success =  responseSerialize(null, res.statusCode, true)
+            return res.json(success)
         }
         
-        return res.json({
-            success: false,
-            message: 'delete data failed',
-            data: []
-        })
+        const failed = failNotFound("Delete data failed", 200)
+        return res.json(failed)
     }
 
     getRole = async (req: Request, res: Response):Promise<Response> => {
@@ -88,11 +69,9 @@ class UserController implements IController {
 
         const data = await service.getRoleUser()
 
-        return res.json({
-            success: true,
-            message: `Get data ${req.params.role} role`,
-            data: data
-        })
+        const result = responseSerialize(data, res.statusCode, true)
+
+        return res.json(result)
     }
     
 }

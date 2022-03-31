@@ -1,5 +1,4 @@
 import BaseRouter from "./BaseRoutes";
-import { Request, Response } from 'express'
 
 // Controller
 import UserController from "../controllers/UserController";
