@@ -14,8 +14,25 @@ Stack:
 
 ---
 
+Clone this repository
+
+```bash
+git clone https://github.com/junanda/RestApi-NTM.git
+```
+
 Open command line/terminal and cd to above nodejs/express project folder.
-run `npm install` or `yarn add` to install package using in project
+
+```bash
+npm install
+```
+
+or
+
+```bash
+yarn add
+```
+
+to install packages
 
 ## How To Run
 
