@@ -18,11 +18,9 @@ class AuthController {
             const check = await Authentication.passCheck(password, user.password)
 
             if(check){
-                return res.json({
-                    success: true,
-                    message: "Login Success",
-                    data: user
-                })
+                const token = await Authentication.generateToken(user.id, user.username, user.role)
+
+                return res.json({ token })
             }
             
             return res.json({
