@@ -38,4 +38,16 @@ to install packages
 
 ---
 
-on terminal/shell typing `yarn ts` for compiling TypeScript to javascript. then `yarn dev` for running server
+on terminal/shell typing
+
+```bash
+yarn ts
+```
+
+for compiling TypeScript to javascript. then
+
+```bash
+yarn dev
+```
+
+for running server
